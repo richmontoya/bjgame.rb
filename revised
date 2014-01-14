@@ -1,0 +1,101 @@
+puts 'BLACKJACK-21 Lets Play!'
+
+def calculate(cards)
+arr = cards.map{|e| e[0] }
+total = 0
+arr.each do |value|
+ if value == 'A'
+ total += 11
+ elsif value.to_i == 0
+ total += 10
+ else 
+ total += value.to_i
+ end
+end
+ arr.select {|e| e == 'A'}.count.times do
+                total -= 10 if total > 21
+end
+ total
+end
+cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+
+suits = ['of Spades', 'of Hearts', 'of Clubs', 'of Diamonds']
+
+deck = []
+deck = cards.product(suits)
+ 
+ deck.shuffle!
+ 
+ mycards = []
+ dealercards = []
+ 
+ mycards << deck.pop
+ dealercards << deck.pop
+  mycards << deck.pop
+ dealercards << deck.pop
+ 
+dealertotal = calculate(dealercards)
+mytotal = calculate(mycards)
+puts "Dealer has: #{dealercards[1]} and #{dealercards[0]}, for a total of #{dealertotal}"
+puts "You have: #{mycards[1]} and #{mycards[0]}, for a total of: #{mytotal}"
+puts ' '
+if mytotal == 21
+puts 'Black Jack! You win!'
+exit
+end
+if dealertotal == 21
+puts ' Dealer wins! Black Jack!'
+exit
+end
+puts "Hit or Stay? (#1) for Hit, (#2) for Stay"
+hit_or_stay = gets.chomp
+if hit_or_stay == "2"
+puts "Good idea!"
+end
+if hit_or_stay == "1"
+new_card = deck.pop
+puts "#{new_card}"
+mycards << new_card
+mytotal = calculate(mycards)
+puts "#{mytotal}"
+if mytotal > 21
+ puts 'Busted!'
+elsif mytotal == 21
+else
+ puts "Hit or Stay? (#1) for Hit, (#2) for Stay"
+ hit_or_stay = gets.chomp
+if hit_or_stay == "2"
+ puts "Good idea!"
+ hit_or_stay = gets.chomp
+  else hit_or_stay == "1"
+   new_card = deck.pop
+   puts "#{new_card}"
+   mycards << new_card
+   mytotal = calculate(mycards)
+   puts "You have #{mytotal}"
+  end
+ end
+end
+while dealertotal < 17 
+new_card = deck.pop
+dealercards << new_card
+puts "Dealer gets a #{new_card}"
+dealertotal = calculate(dealercards)
+puts "Dealer has #{dealertotal}"
+  if dealertotal > 21
+  puts "Dealer busted"
+  else dealertotal > mytotal
+  puts "You have #{mytotal}" 
+  if dealertotal == mytotal
+  puts "Dealer has #{dealertotal}"
+  puts "You have #{mytotal}"
+  puts "Tied, Dealer wins!"
+
+  elsif dealertotal < mytotal 
+  puts "Dealer has, #{dealertotal}"
+  puts "You have #{mytotal}, winner!"
+  end 
+ end
+ end
+
+
